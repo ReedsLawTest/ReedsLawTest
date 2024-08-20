@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reed's Law Test - Results</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.0"></script>
+    <style>
+        /* Banner Styles */
+        .bottom-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #f3e6bc;
+            color: #333;
+            text-align: center;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Your Reed's Law Test Results</h2>
+        <canvas id="resultsChart" width="400" height="200"></canvas>
+        <button onclick="retakeTest()">Retake Test</button>
+    </div>
+
+    <div class="bottom-banner">
+        Results powered by AI
+    </div>
+
+    <script>
+        function getQueryParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        function renderChart(score) {
+            const ctx = document.getElementById('resultsChart').getContext('2d');
+
+            // Custom curve data for Reed's Law
+            const xValues = [];
+            const yValues = [];
+            
+            // Generate points for Reed's Law curve (this is a placeholder, replace with your own function)
+            for (let x = 0; x <= 100; x += 1) {
+                xValues.push(x);
+                
+                // Custom curve (modify this equation to represent Reed's Law)
+                let y = (5.5 / (55-x)) - 0.08; // Placeholder equation
+                if (x > 50) y = -(1/(50-x)) - 1  ; // Flips the curve at x = 50
+                yValues.push(y); // Normalize to range 0 to 1
+            }
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: xValues,
+                    datasets: [
+                        {
+                            label: 'Reed\'s Law Curve',
+                            data: yValues,
+                            borderColor: 'rgba(0, 0, 255, 0.9)',
+                            borderWidth: 2,
+                            fill: false,
+                            tension: 0.4, // Increase tension to smooth out the line
+                            pointRadius: 0, // No dots
+                        },
+                        {
+                            label: 'Your Score',
+                            data: Array(101).fill(null).map((_, index) => (index === score ? yValues[score] : null)),
+                            borderColor: 'red',
+                            borderWidth: 2,
+                            pointRadius: 5,
+                            pointBackgroundColor: 'red',
+                            showLine: false,
+                        },
+                    ]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            title: {
+                                display: true,
+                                text: 'How Gay You Act'
+                            },
+                            min: 0, // Set x-axis minimum
+                            max: 100, // Set x-axis maximum
+                            ticks: {
+                                callback: function(value) {
+                                    if (value === 0) return 'Not Gay'; // Label for min
+                                    if (value === 100) return 'Gay'; // Label for max
+                                    return ''; // Hide other labels
+                                },
+                                stepSize: 50 // Adjust step size to ensure Reed's Limit at 50 is reachable
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'How Gay You Are'
+                            },
+                            min: -1, // Set ymin to 0 (Gay)
+                            max: 1, // Set ymax to 1 (Not Gay)
+                            ticks: {
+                                callback: function(value) {
+                                    if (value === -1) return 'Gay'; // Label for ymin
+                                    if (value === 1) return 'Not Gay'; // Label for ymax
+                                    return ''; // Hide other labels
+                                },
+                                stepSize: 1 // Only show labels for 0 and 1
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true
+                        },
+                        tooltip: {
+                            enabled: false // Disable tooltips since we are adding custom text
+                        },
+                        annotation: {
+                            annotations: {
+                                line1: {
+                                    type: 'line',
+                                    xMin: 50,
+                                    xMax: 50,
+                                    borderColor: 'rgba(0, 128, 0, 1)',
+                                    borderWidth: 2.5,
+                                    borderDash: [5, 5], // Dotted line
+                                    label: {
+                                        content: 'Reed\'s Limit',
+                                        enabled: true,
+                                        position: 'top', // Position the label at the top
+                                        yAdjust: 0, // Adjust the label vertically
+                                        xAdjust: -10, // Move the label horizontally next to the line
+                                        color: 'green', // Make the text green
+                                        backgroundColor: 'transparent', // Remove the black box
+                                        rotation: 270, // Rotate the label sideways
+                                        font: {
+                                            size: 12 // Adjust the font size as needed
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function retakeTest() {
+            window.location.href = 'index.html';
+        }
+
+        // Get the score from the URL and render the chart
+        const yah = getQueryParameter('score');
+        var con = 0
+        if (yah !== null) {
+            score = parseInt(yah);
+            if (score >= 254) {
+                con = 1
+            } else if (score >= 200) {
+                score = (((score + 6) % 100) + 54) * (50 / 61);
+            } else if (score >= 100) {
+                score = ((score % 100) + 54) * (50 / 61);
+            } else {
+                score = score * (50 / 55);
+            }
+            renderChart(parseInt(score));
+            if (con === 1) {
+                setTimeout(() => {
+                    alert("Our system has identified that the input provided reflects a higher level of homosexuality than currently supported. We are actively working on a patch to accommodate this and improve our system's capabilities. We appreciate your patience and understanding as we make these enhancements.");
+                }, 500);
+                setTimeout(() => {
+                    window.location.href = 'https://www.adameve.com/adult-sex-toys/dildo-sex-toys/realistic-dildos/sp-mr-marcuss-incher-12935.aspx';
+                }, 2000);
+            }
+        }
+    </script>
+</body>
+</html>

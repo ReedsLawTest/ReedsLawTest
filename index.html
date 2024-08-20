@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reed's Law Test</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Reed's Law</h2>
+        <p class="definition">
+            <strong>Reed's Law</strong> <span class="pronunciation">/rēds lô/</span> <em>noun</em><br>
+            <strong>Definition:</strong> A principle stating that there exists a critical point (or line) on a conceptual continuum of behaviors associated with sexual orientation. 
+            As an individual approaches this critical point from a predominantly heterosexual orientation by engaging in behaviors typically associated with homosexuality, 
+            their orientation appears to become increasingly heterosexual in contrast. However, upon surpassing this critical point, the relationship inverts; the individual's 
+            orientation rapidly shifts towards homosexuality, akin to a mathematical limit where the function yields different values depending on the direction from which the 
+            limit is approached.
+        </p>
+
+        <p class="definition">
+            <strong>In formal terms:</strong> If we let `x` represent the degree of "gayness" (behavioral actions associated with homosexuality), and `y` represent the corresponding perceived sexual orientation:
+            <ul>
+                <li>As `x` approaches the critical point `c` from the left (`x → c⁻`), `y` increases towards heterosexuality.</li>
+                <li>As `x` passes the critical point `y` rapidly increases towards homosexuality.</li>
+            </ul>
+            This creates a discontinuity at `x = c`, where the perceived orientation flips from one extreme to the other, analogous to a piecewise function with distinct behaviors on either side of the critical point.
+        </p>
+
+        <hr>
+
+        <h2>Reed's Law Test</h2>
+        <p>Select all the actions you have done. Your score will be calculated based on the selections you make.</p>
+        <form id="quizForm">
+            <!-- Questions will be inserted here by JavaScript -->
+        </form>
+        <button type="button" onclick="submitQuiz()">Calculate My Score</button>
+    </div>
+
+    <script src="questions.js"></script>
+</body>
+</html>
