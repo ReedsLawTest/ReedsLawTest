@@ -107,7 +107,7 @@
                         y: {
                             title: {
                                 display: true,
-                                text: 'How Gay You Are'
+                                text: 'AI Question Score'
                             },
                             min: -1, // Set ymin to 0 (Gay)
                             max: 1, // Set ymax to 1 (Not Gay)
@@ -170,9 +170,9 @@
             if (score >= 254) {
                 con = 1
             } else if (score >= 200) {
-                score = (((score + 6) % 100) * (60 / 100)) + 50;
+                score = (((score + 6) % 100) * (60 / 102)) + 52;
             } else if (score >= 100) {
-                score = ((score % 100) * (60 / 100)) + 50;
+                score = ((score % 100) * (60 / 102)) + 52;
             } else {
                 score = score * (50 / 35);
             }
