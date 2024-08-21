@@ -91,14 +91,14 @@
                             position: 'bottom',
                             title: {
                                 display: true,
-                                text: 'How Gay You Act'
+                                text: 'AI Question Score'
                             },
                             min: 0, // Set x-axis minimum
                             max: 100, // Set x-axis maximum
                             ticks: {
                                 callback: function(value) {
-                                    if (value === 0) return 'Not Gay'; // Label for min
-                                    if (value === 100) return 'Gay'; // Label for max
+                                    if (value === 0) return ''; // Label for min
+                                    if (value === 100) return ''; // Label for max
                                     return ''; // Hide other labels
                                 },
                                 stepSize: 50 // Adjust step size to ensure Reed's Limit at 50 is reachable
@@ -107,7 +107,7 @@
                         y: {
                             title: {
                                 display: true,
-                                text: 'AI Question Score'
+                                text: 'How Gay You Are'
                             },
                             min: -1, // Set ymin to 0 (Gay)
                             max: 1, // Set ymax to 1 (Not Gay)
